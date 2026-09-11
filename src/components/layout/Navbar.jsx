@@ -1,0 +1,120 @@
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { GoldCta } from "../GoldCta.jsx";
+import { navItems } from "../../data/content.js";
+import { cn } from "../../utils.js";
+
+export function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header className="nav-slide-down sticky top-0 z-50 px-3 pt-5 md:px-6 lg:px-8 relative">
+      <nav
+        className={cn(
+          "mx-auto flex max-w-7xl items-center rounded-full transition-all duration-300",
+          // +10px padding on every side vs previous px-2/3 py-1.5
+          "px-[18px] py-[14px] md:px-[22px]",
+          scrolled
+            ? "bg-primary text-white shadow-[0_14px_40px_rgb(59_91_255_/_0.32)]"
+            : "bg-transparent text-primary shadow-none",
+        )}
+      >
+        <a href="#top" className="flex shrink-0 items-center gap-2.5 pr-3">
+          <img
+            src={scrolled ? "/images/logo-mark-white.png" : "/images/logo-mark-navy.png"}
+            alt=""
+            className="h-8 w-auto"
+            style={
+              scrolled
+                ? undefined
+                : {
+                    /* match primary blue (#3b5bff) to logo text */
+                    filter:
+                      "brightness(0) saturate(100%) invert(32%) sepia(93%) saturate(2500%) hue-rotate(220deg) brightness(100%) contrast(101%)",
+                  }
+            }
+          />
+          <span
+            className={cn(
+              "hidden text-[18px] font-bold tracking-wide transition-colors duration-300 sm:inline",
+              scrolled ? "text-white" : "text-primary",
+            )}
+          >
+            West Bridge
+          </span>
+        </a>
+
+        <div className="hidden flex-1 items-center justify-center gap-8 text-[15px] font-bold lg:flex">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "transition-colors duration-300",
+                scrolled
+                  ? "text-white hover:text-[#a8b8ff]"
+                  : "text-primary hover:text-primary/70",
+              )}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="ml-auto flex items-center gap-3">
+          <span className="hidden sm:contents">
+            <GoldCta
+              to="#book"
+              tone={scrolled ? "white" : "primary"}
+              className="max-w-[240px] md:max-w-none"
+            >
+              <span className="truncate">Book your free consultation</span>
+            </GoldCta>
+          </span>
+          <button
+            type="button"
+            className={cn(
+              "flex size-11 items-center justify-center rounded-full transition-colors duration-300 lg:hidden",
+              scrolled ? "bg-white/10 text-white" : "bg-primary/10 text-primary",
+            )}
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Menu"
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
+      </nav>
+
+      {open ? (
+        <div
+          className={cn(
+            "absolute left-3 right-3 top-full z-50 mx-auto mt-2 max-w-7xl rounded-3xl p-4 shadow-xl lg:hidden md:left-6 md:right-6",
+            scrolled ? "bg-primary text-white" : "bg-white text-navy",
+          )}
+        >
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              className={cn(
+                "block rounded-2xl px-4 py-3 text-[15px] font-bold",
+                scrolled ? "hover:bg-white/10 hover:text-[#a8b8ff]" : "hover:bg-primary/5",
+              )}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      ) : null}
+    </header>
+  );
+}
