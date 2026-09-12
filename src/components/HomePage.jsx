@@ -86,10 +86,10 @@ export function HomePage() {
       {/* HERO — large orbits, 100px top gap, bottom fade */}
       <section
         id="top"
-        className="relative min-h-[560px] overflow-hidden px-4 pb-20 pt-[72px] scroll-mt-24 md:min-h-[640px]"
+        className="relative min-h-[560px] overflow-x-clip overflow-y-hidden px-4 pb-20 pt-[72px] scroll-mt-24 md:min-h-[640px]"
       >
         {/* Full-bleed orbit stage — grows in on load */}
-        <div className="pointer-events-none absolute inset-x-10 top-0 bottom-0 md:inset-x-[105px]">
+        <div className="pointer-events-none absolute inset-x-6 top-0 bottom-0 overflow-hidden sm:inset-x-10 md:inset-x-[105px]">
           <div
             className={`absolute left-1/2 top-0 aspect-square w-full max-w-none -translate-x-1/2 transition-all duration-[1200ms] ease-out ${
               fanned ? "scale-100 opacity-100" : "scale-[0.35] opacity-40"
@@ -116,21 +116,21 @@ export function HomePage() {
               alt=""
               className={`absolute z-[1] h-40 w-[7.25rem] rounded-md object-cover shadow-xl ring-[4px] ring-white transition-all duration-[1200ms] ease-out sm:h-48 sm:w-36 sm:ring-[5px] md:h-60 md:w-44 md:ring-[6px] ${
                 fanned
-                  ? "-translate-x-[4.75rem] -rotate-12 sm:-translate-x-[6rem] md:-translate-x-[8.25rem]"
+                  ? "-translate-x-[3.25rem] -rotate-12 sm:-translate-x-[6rem] md:-translate-x-[8.25rem]"
                   : "translate-x-0 rotate-0"
               }`}
             />
             <img
               src="/images/people/hero2.jpg"
               alt=""
-              className="relative z-20 h-40 w-[7.25rem] rounded-md object-cover shadow-2xl ring-[4px] ring-white sm:h-48 sm:w-36 sm:ring-[5px] md:h-60 md:w-44 md:ring-[6px]"
+              className={`relative z-20 h-40 w-[7.25rem] rounded-md object-cover shadow-2xl ring-[4px] ring-white transition-opacity duration-[1000ms] ease-out sm:h-48 sm:w-36 sm:ring-[5px] md:h-60 md:w-44 md:ring-[6px] ${fanned ? "opacity-100" : "opacity-0"}`}
             />
             <img
               src="/images/people/hero3.jpg"
               alt=""
               className={`absolute z-[1] h-40 w-[7.25rem] rounded-md object-cover shadow-xl ring-[4px] ring-white transition-all duration-[1200ms] ease-out sm:h-48 sm:w-36 sm:ring-[5px] md:h-60 md:w-44 md:ring-[6px] ${
                 fanned
-                  ? "translate-x-[4.75rem] rotate-12 sm:translate-x-[6rem] md:translate-x-[8.25rem]"
+                  ? "translate-x-[3.25rem] rotate-12 sm:translate-x-[6rem] md:translate-x-[8.25rem]"
                   : "translate-x-0 rotate-0"
               }`}
             />

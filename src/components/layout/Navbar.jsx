@@ -16,12 +16,13 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="nav-slide-down sticky top-0 z-50 px-3 pt-5 md:px-6 lg:px-8 relative">
+    <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:pt-5 md:px-6 lg:px-8">
+      <div className="nav-slide-down relative">
       <nav
         className={cn(
           "mx-auto flex max-w-7xl items-center rounded-full transition-all duration-300",
           // +10px padding on every side vs previous px-2/3 py-1.5
-          "px-[18px] py-[14px] md:px-[22px]",
+          "px-[14px] py-[12px] sm:px-[18px] sm:py-[14px] md:px-[22px]",
           scrolled
             ? "bg-primary text-white shadow-[0_14px_40px_rgb(59_91_255_/_0.32)]"
             : "bg-transparent text-primary shadow-none",
@@ -115,6 +116,7 @@ export function Navbar() {
           ))}
         </div>
       ) : null}
+      </div>
     </header>
   );
 }

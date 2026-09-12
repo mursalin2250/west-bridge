@@ -4,7 +4,7 @@ import { HomePage } from "./components/HomePage.jsx";
 
 export default function App() {
   return (
-    <div className="min-h-dvh bg-bg">
+    <div className="min-h-dvh overflow-x-clip bg-bg">
       <Navbar />
       <HomePage />
       <Footer />
