@@ -88,6 +88,10 @@ export function ConsultationForm({ heading = true }) {
   const inputClass =
     "h-12 w-full rounded-full border border-border bg-soft/60 px-5 text-sm text-ink outline-none transition placeholder:text-muted/70 focus:border-primary focus:bg-surface focus:ring-2 focus:ring-primary/15";
 
+  const selectClass =
+    inputClass +
+    " appearance-none pr-12 bg-[length:1rem] bg-[right_1.15rem_center] bg-no-repeat";
+
   return (
     <div>
       {heading ? (
@@ -115,7 +119,16 @@ export function ConsultationForm({ heading = true }) {
           {selects.map((s) => (
             <label key={s.name} className="block">
               <span className="mb-2 block text-sm font-medium text-ink">{s.label}</span>
-              <select name={s.name} required defaultValue="" className={inputClass}>
+              <select
+                name={s.name}
+                required
+                defaultValue=""
+                className={selectClass}
+                style={{
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",
+                }}
+              >
                 <option value="" disabled>
                   {s.placeholder}
                 </option>
