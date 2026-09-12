@@ -60,15 +60,26 @@ const serviceCardIcons = {
 export function HomePage() {
   const [openFaq, setOpenFaq] = useState(0);
   const [openDestination, setOpenDestination] = useState(0);
+  const [centerIn, setCenterIn] = useState(false);
   const [fanned, setFanned] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [serviceTab, setServiceTab] = useState(0);
   const [visibleCount, setVisibleCount] = useState(3);
   const [serviceFade, setServiceFade] = useState(true);
 
+  // 1) Center image fades in first (~1000ms)
+  // 2) At ~90% of that (900ms), side images / circles / text start
   useEffect(() => {
-    const id = window.setTimeout(() => setFanned(true), 80);
-    return () => window.clearTimeout(id);
+    const t0 = window.setTimeout(() => setCenterIn(true), 40);
+    const t1 = window.setTimeout(() => {
+      setFanned(true);
+      setSceneReady(true);
+    }, 900);
+    return () => {
+      window.clearTimeout(t0);
+      window.clearTimeout(t1);
+    };
   }, []);
 
   useEffect(() => {
@@ -86,7 +97,7 @@ export function HomePage() {
       {/* HERO — large orbits, 100px top gap, bottom fade */}
       <section
         id="top"
-        className="relative min-h-[560px] overflow-x-clip overflow-y-hidden px-4 pb-20 pt-[7.5rem] scroll-mt-28 md:min-h-[640px] md:pt-[8.5rem]"
+        className="relative min-h-[560px] overflow-x-clip overflow-y-hidden px-4 pb-20 pt-36 scroll-mt-32 md:min-h-[680px] md:pt-40"
       >
         {/* Full-bleed orbit stage — grows in on load */}
         <div className="pointer-events-none absolute inset-x-6 top-0 bottom-0 overflow-hidden sm:inset-x-10 md:inset-x-[105px]">
@@ -116,41 +127,57 @@ export function HomePage() {
               alt=""
               className={`absolute z-[1] h-40 w-[7.25rem] rounded-md object-cover shadow-xl ring-[4px] ring-white transition-all duration-[1200ms] ease-out sm:h-48 sm:w-36 sm:ring-[5px] md:h-60 md:w-44 md:ring-[6px] ${
                 fanned
-                  ? "-translate-x-[3.25rem] -rotate-12 sm:-translate-x-[6rem] md:-translate-x-[8.25rem]"
-                  : "translate-x-0 rotate-0"
+                  ? "-translate-x-[3.25rem] -rotate-12 opacity-100 sm:-translate-x-[6rem] md:-translate-x-[8.25rem]"
+                  : "translate-x-0 rotate-0 opacity-0"
               }`}
             />
             <img
               src="/images/people/hero2.jpg"
               alt=""
-              className={`relative z-20 h-40 w-[7.25rem] rounded-md object-cover shadow-2xl ring-[4px] ring-white transition-opacity duration-[1000ms] ease-out sm:h-48 sm:w-36 sm:ring-[5px] md:h-60 md:w-44 md:ring-[6px] ${fanned ? "opacity-100" : "opacity-0"}`}
+              className={`relative z-20 h-40 w-[7.25rem] rounded-md object-cover shadow-2xl ring-[4px] ring-white transition-opacity duration-[1000ms] ease-out sm:h-48 sm:w-36 sm:ring-[5px] md:h-60 md:w-44 md:ring-[6px] ${
+                centerIn ? "opacity-100" : "opacity-0"
+              }`}
             />
             <img
               src="/images/people/hero3.jpg"
               alt=""
               className={`absolute z-[1] h-40 w-[7.25rem] rounded-md object-cover shadow-xl ring-[4px] ring-white transition-all duration-[1200ms] ease-out sm:h-48 sm:w-36 sm:ring-[5px] md:h-60 md:w-44 md:ring-[6px] ${
                 fanned
-                  ? "translate-x-[3.25rem] rotate-12 sm:translate-x-[6rem] md:translate-x-[8.25rem]"
-                  : "translate-x-0 rotate-0"
+                  ? "translate-x-[3.25rem] rotate-12 opacity-100 sm:translate-x-[6rem] md:translate-x-[8.25rem]"
+                  : "translate-x-0 rotate-0 opacity-0"
               }`}
             />
           </div>
 
           <div className="relative z-10 mx-auto mt-10 flex max-w-2xl flex-col items-center text-center md:mt-12">
-            <p className="hero-enter inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-primary">
+            <p
+              className={`inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-primary ${
+                sceneReady ? "hero-enter" : "opacity-0"
+              }`}
+            >
               <MapPin className="size-3.5" />
               Top global study spots
             </p>
-            <h1 className="hero-enter hero-enter-delay-1 mt-3 text-[34px] font-bold leading-[1.12] tracking-tight text-navy md:text-[56px]">
+            <h1
+              className={`mt-3 text-[34px] font-bold leading-[1.12] tracking-tight text-navy md:text-[56px] ${
+                sceneReady ? "hero-enter hero-enter-delay-1" : "opacity-0"
+              }`}
+            >
               Explore Top Study
               <br />
               <span className="text-primary">Abroad Destinations.</span>
             </h1>
-            <p className="hero-enter hero-enter-delay-2 mt-4 max-w-md text-[13px] leading-relaxed text-muted md:text-sm">
+            <p
+              className={`mt-4 max-w-md text-[13px] leading-relaxed text-muted md:text-sm ${
+                sceneReady ? "hero-enter hero-enter-delay-2" : "opacity-0"
+              }`}
+            >
               West Bridge helps you explore top study-abroad destinations, offering diverse
               programmes and unforgettable cultural experiences.
             </p>
-            <div className="hero-enter hero-enter-delay-3 mt-6">
+            <div
+              className={`mt-6 ${sceneReady ? "hero-enter hero-enter-delay-3" : "opacity-0"}`}
+            >
               <GoldCta to="#book">
                 Book a free consultation
               </GoldCta>
