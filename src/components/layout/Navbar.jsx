@@ -16,8 +16,8 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full px-3 pt-3 sm:pt-5 md:px-6 lg:px-8">
-      <div className="nav-slide-down relative">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 w-full px-3 pt-3 sm:pt-5 md:px-6 lg:px-8">
+      <div className="nav-slide-down pointer-events-auto relative">
       <nav
         className={cn(
           "mx-auto flex max-w-7xl items-center rounded-full transition-all duration-300",
