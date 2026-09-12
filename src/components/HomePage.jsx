@@ -64,6 +64,7 @@ export function HomePage() {
   const [fanned, setFanned] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [slideAnim, setSlideAnim] = useState(true);
   const [serviceTab, setServiceTab] = useState(0);
   const [visibleCount, setVisibleCount] = useState(3);
   const [serviceFade, setServiceFade] = useState(true);
@@ -91,6 +92,16 @@ export function HomePage() {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  // Seamless loop: after sliding into the cloned half, snap back without animation
+  useEffect(() => {
+    if (testimonialIndex < testimonials.length) return;
+    const id = window.setTimeout(() => {
+      setSlideAnim(false);
+      setTestimonialIndex(testimonialIndex % testimonials.length);
+    }, 520);
+    return () => window.clearTimeout(id);
+  }, [testimonialIndex]);
 
   return (
     <main>
@@ -448,24 +459,19 @@ export function HomePage() {
 
           <div className="relative mt-12">
             <Reveal variant="up">
-              <div
-                className={`grid gap-2 transition-all duration-500 ease-out ${
-                  visibleCount === 1
-                    ? "grid-cols-1"
-                    : visibleCount === 2
-                      ? "grid-cols-2"
-                      : "grid-cols-3"
-                }`}
-              >
-                {Array.from({ length: visibleCount }).map((_, offset) => {
-                  const item =
-                    testimonials[
-                      (testimonialIndex + offset + testimonials.length) % testimonials.length
-                    ];
-                  return (
+              <div className="overflow-hidden">
+                <div
+                  className={`flex ${slideAnim ? "transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" : ""}`}
+                  style={{
+                    transform: `translateX(-${(testimonialIndex * 100) / visibleCount}%)`,
+                  }}
+                >
+                  {/* Double list for seamless looping */}
+                  {[...testimonials, ...testimonials].map((item, idx) => (
                     <article
-                      key={`${item.name}-${testimonialIndex}-${offset}`}
-                      className="group relative aspect-[3/3.5] w-full overflow-hidden rounded-2xl md:aspect-[3/3.65]"
+                      key={`${item.name}-${idx}`}
+                      className="group relative aspect-[3/3.5] shrink-0 overflow-hidden px-1 md:aspect-[3/3.65] md:px-1.5"
+                      style={{ width: `${100 / visibleCount}%` }}
                     >
                       <div className="relative h-full overflow-hidden rounded-2xl">
                         <img
@@ -492,8 +498,8 @@ export function HomePage() {
                         </div>
                       </div>
                     </article>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
             </Reveal>
           </div>
@@ -502,11 +508,22 @@ export function HomePage() {
             <button
               type="button"
               aria-label="Previous review"
-              onClick={() =>
-                setTestimonialIndex(
-                  (i) => (i - 1 + testimonials.length) % testimonials.length,
-                )
-              }
+              onClick={() => {
+                if (testimonialIndex <= 0) {
+                  // jump to twin set without animation, then slide back
+                  setSlideAnim(false);
+                  setTestimonialIndex(testimonials.length);
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                      setSlideAnim(true);
+                      setTestimonialIndex(testimonials.length - 1);
+                    });
+                  });
+                } else {
+                  setSlideAnim(true);
+                  setTestimonialIndex((i) => i - 1);
+                }
+              }}
               className="flex size-14 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur transition hover:bg-white hover:text-navy"
             >
               <ChevronLeft className="size-7" strokeWidth={2.5} />
@@ -517,9 +534,14 @@ export function HomePage() {
                   key={i}
                   type="button"
                   aria-label={`Go to review ${i + 1}`}
-                  onClick={() => setTestimonialIndex(i)}
+                  onClick={() => {
+                    setSlideAnim(true);
+                    setTestimonialIndex(i);
+                  }}
                   className={`h-2.5 rounded-full transition-all ${
-                    testimonialIndex === i ? "w-7 bg-white" : "w-2.5 bg-white/40 hover:bg-white/70"
+                    testimonialIndex % testimonials.length === i
+                      ? "w-7 bg-white"
+                      : "w-2.5 bg-white/40 hover:bg-white/70"
                   }`}
                 />
               ))}
@@ -527,9 +549,10 @@ export function HomePage() {
             <button
               type="button"
               aria-label="Next review"
-              onClick={() =>
-                setTestimonialIndex((i) => (i + 1) % testimonials.length)
-              }
+              onClick={() => {
+                setSlideAnim(true);
+                setTestimonialIndex((i) => i + 1);
+              }}
               className="flex size-14 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur transition hover:bg-white hover:text-navy"
             >
               <ChevronRight className="size-7" strokeWidth={2.5} />
