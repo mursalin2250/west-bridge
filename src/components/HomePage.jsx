@@ -94,27 +94,22 @@ export function HomePage() {
 
   return (
     <main>
-      {/* HERO — circles + content both start below fixed navbar */}
+      {/* HERO — orbits + content offset below fixed navbar (all breakpoints) */}
       <section
         id="top"
         className="relative min-h-[560px] overflow-x-clip overflow-y-hidden px-4 pb-20 scroll-mt-32 md:min-h-[680px]"
       >
-        {/* Matches fixed navbar height (mobile + desktop) */}
-        <div className="h-[5.75rem] sm:h-[6.5rem] md:h-[7rem]" aria-hidden="true" />
-
-        {/* Shared stage: orbits are positioned from HERE, not section top */}
-        <div className="relative">
-          <div className="pointer-events-none absolute inset-x-0 top-0 bottom-0 overflow-hidden">
-            <div className="absolute inset-x-6 top-0 bottom-0 sm:inset-x-10 md:inset-x-[105px]">
-              <div
-                className={`absolute left-1/2 top-0 aspect-square w-full max-w-none -translate-x-1/2 transition-all duration-[1200ms] ease-out ${
-                  fanned ? "scale-100 opacity-100" : "scale-[0.35] opacity-40"
-                }`}
-              >
-                <div className="orbit absolute inset-[22%]" />
-                <div className="orbit absolute inset-[10%]" />
-                <div className="orbit orbit-animate absolute inset-0 opacity-70" />
-              </div>
+        {/* Circles: absolute top clears navbar; slightly higher on mobile than content */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[4.25rem] overflow-hidden sm:top-[5rem] md:top-[6.5rem] lg:top-[7rem]">
+          <div className="absolute inset-x-6 top-0 bottom-0 sm:inset-x-10 md:inset-x-[105px]">
+            <div
+              className={`absolute left-1/2 top-0 aspect-square w-full max-w-none -translate-x-1/2 transition-all duration-[1200ms] ease-out ${
+                fanned ? "scale-100 opacity-100" : "scale-[0.35] opacity-40"
+              }`}
+            >
+              <div className="orbit absolute inset-[22%]" />
+              <div className="orbit absolute inset-[10%]" />
+              <div className="orbit orbit-animate absolute inset-0 opacity-70" />
             </div>
           </div>
           <div
@@ -124,8 +119,10 @@ export function HomePage() {
                 "linear-gradient(to bottom, transparent 0%, #eef1fb 70%, #eef1fb 100%)",
             }}
           />
+        </div>
 
-          <div className="relative z-10 mx-auto max-w-7xl">
+        {/* Content: a bit lower than the circle top so it sits below the bar cleanly */}
+        <div className="relative z-10 mx-auto max-w-7xl pt-[5.5rem] sm:pt-[6.25rem] md:pt-[7.75rem] lg:pt-[8.25rem]">
           <div className="relative z-10 mx-auto flex h-44 w-full max-w-[min(100%,36rem)] items-center justify-center overflow-visible pt-2 sm:h-52 md:h-64 md:max-w-2xl md:pt-6">
             <img
               src="/images/people/hero1.jpg"
@@ -188,7 +185,6 @@ export function HomePage() {
               </GoldCta>
             </div>
           </div>
-        </div>
         </div>
       </section>
 
