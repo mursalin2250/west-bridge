@@ -122,7 +122,7 @@ export function HomePage() {
         </div>
 
         {/* Content: a bit lower than the circle top so it sits below the bar cleanly */}
-        <div className="relative z-10 mx-auto max-w-7xl pt-[5.5rem] sm:pt-[6.25rem] md:pt-[7.75rem] lg:pt-[8.25rem]">
+        <div className="relative z-10 mx-auto max-w-7xl pt-[6.5rem] sm:pt-[7.25rem] md:pt-[8.75rem] lg:pt-[9.25rem]">
           <div className="relative z-10 mx-auto flex h-44 w-full max-w-[min(100%,36rem)] items-center justify-center overflow-visible pt-2 sm:h-52 md:h-64 md:max-w-2xl md:pt-6">
             <img
               src="/images/people/hero1.jpg"
@@ -447,58 +447,55 @@ export function HomePage() {
           </Reveal>
 
           <div className="relative mt-12">
-            <div
-              className={`grid gap-2 transition-all duration-500 ease-out ${
-                visibleCount === 1
-                  ? "grid-cols-1"
-                  : visibleCount === 2
-                    ? "grid-cols-2"
-                    : "grid-cols-3"
-              }`}
-            >
-              {Array.from({ length: visibleCount }).map((_, offset) => {
-                const item =
-                  testimonials[
-                    (testimonialIndex + offset + testimonials.length) % testimonials.length
-                  ];
-                return (
-                  <Reveal
-                    key={`${item.name}-${testimonialIndex}-${offset}`}
-                    delay={offset * 120}
-                    variant="up"
-                  >
-                  <article
-                    className="group relative aspect-[3/3.5] w-full overflow-hidden rounded-2xl md:aspect-[3/3.65]"
-                  >
-                    <div className="relative h-full overflow-hidden rounded-2xl">
-                      <img
-                        src={item.avatar}
-                        alt=""
-                        className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-black/45" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary from-0% via-primary/50 via-40% to-transparent to-100% opacity-0 transition duration-500 group-hover:opacity-100" />
-                      <div className="relative z-10 flex h-full flex-col p-6 md:p-8">
+            <Reveal variant="up">
+              <div
+                className={`grid gap-2 transition-all duration-500 ease-out ${
+                  visibleCount === 1
+                    ? "grid-cols-1"
+                    : visibleCount === 2
+                      ? "grid-cols-2"
+                      : "grid-cols-3"
+                }`}
+              >
+                {Array.from({ length: visibleCount }).map((_, offset) => {
+                  const item =
+                    testimonials[
+                      (testimonialIndex + offset + testimonials.length) % testimonials.length
+                    ];
+                  return (
+                    <article
+                      key={`${item.name}-${testimonialIndex}-${offset}`}
+                      className="group relative aspect-[3/3.5] w-full overflow-hidden rounded-2xl md:aspect-[3/3.65]"
+                    >
+                      <div className="relative h-full overflow-hidden rounded-2xl">
                         <img
-                          src="/images/quote-mark.png"
+                          src={item.avatar}
                           alt=""
-                          className="size-[4.25rem] shrink-0 object-contain md:size-[5rem]"
+                          className="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
                         />
-                        <p className="mt-8 text-[12px] font-bold uppercase tracking-[0.2em] text-white md:text-[13px]">
-                          {item.label}
-                        </p>
-                        <p className="mt-5 flex-1 text-[17px] font-bold leading-snug text-white md:text-[19px]">
-                          &ldquo;{item.quote}&rdquo;
-                        </p>
-                        <p className="mt-8 text-[16px] font-bold text-white md:text-[17px]">{item.name}</p>
+                        <div className="absolute inset-0 bg-black/45" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary from-0% via-primary/50 via-40% to-transparent to-100% opacity-0 transition duration-500 group-hover:opacity-100" />
+                        <div className="relative z-10 flex h-full flex-col p-6 md:p-8">
+                          <img
+                            src="/images/quote-mark.png"
+                            alt=""
+                            className="size-[4.25rem] shrink-0 object-contain md:size-[5rem]"
+                          />
+                          <p className="mt-8 text-[12px] font-bold uppercase tracking-[0.2em] text-white md:text-[13px]">
+                            {item.label}
+                          </p>
+                          <p className="mt-5 flex-1 text-[17px] font-bold leading-snug text-white md:text-[19px]">
+                            &ldquo;{item.quote}&rdquo;
+                          </p>
+                          <p className="mt-8 text-[16px] font-bold text-white md:text-[17px]">{item.name}</p>
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                  </Reveal>
-                );
-              })}
-            </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </Reveal>
           </div>
 
           <div className="mt-10 flex items-center justify-center gap-4">
