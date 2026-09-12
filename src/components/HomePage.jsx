@@ -86,7 +86,7 @@ export function HomePage() {
       {/* HERO — large orbits, 100px top gap, bottom fade */}
       <section
         id="top"
-        className="relative min-h-[560px] overflow-x-clip overflow-y-hidden px-4 pb-20 pt-[72px] scroll-mt-24 md:min-h-[640px]"
+        className="relative min-h-[560px] overflow-x-clip overflow-y-hidden px-4 pb-20 pt-[7.5rem] scroll-mt-28 md:min-h-[640px] md:pt-[8.5rem]"
       >
         {/* Full-bleed orbit stage — grows in on load */}
         <div className="pointer-events-none absolute inset-x-6 top-0 bottom-0 overflow-hidden sm:inset-x-10 md:inset-x-[105px]">
