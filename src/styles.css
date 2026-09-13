@@ -30,6 +30,7 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
   h1,
   h2,
