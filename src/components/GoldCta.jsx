@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { cn } from "../utils.js";
+import { cn, scrollToHash } from "../utils.js";
 
 export function GoldCta({ to, children, className, tone = "gold" }) {
   const classes = cn(
@@ -21,7 +21,16 @@ export function GoldCta({ to, children, className, tone = "gold" }) {
   );
 
   return (
-    <a href={to} className={classes}>
+    <a
+      href={to}
+      className={classes}
+      onClick={(e) => {
+        if (typeof to === "string" && to.startsWith("#")) {
+          e.preventDefault();
+          scrollToHash(to);
+        }
+      }}
+    >
       <span className="relative mr-3 block h-6 overflow-hidden leading-6">
         <span className="block h-6 whitespace-nowrap transition-transform duration-300 ease-out group-hover:-translate-y-6">
           {children}

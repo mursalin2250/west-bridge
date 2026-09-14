@@ -1,3 +1,4 @@
+import { scrollToHash } from "../../utils.js";
 
 const usefulLinksLeft = [
   { label: "Home", href: "#top" },
@@ -24,7 +25,14 @@ export function Footer() {
       <div className="mx-auto flex max-w-7xl flex-col gap-12 px-6 pb-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16 lg:px-8">
         {/* Brand column — left */}
         <div className="max-w-sm shrink-0">
-          <a href="#top" className="inline-flex items-center gap-2.5">
+          <a
+            href="#top"
+            className="inline-flex items-center gap-2.5"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToHash("#top");
+            }}
+          >
             <img src="/images/logo-mark-white.png" alt="" className="h-8 w-auto" />
             <span className="text-lg font-bold tracking-tight text-white">West Bridge</span>
           </a>
@@ -67,14 +75,34 @@ export function Footer() {
             <div className="mt-5 grid grid-cols-2 gap-x-10 gap-y-3 text-[14px] text-white/70">
               <div className="flex flex-col gap-3">
                 {usefulLinksLeft.map((l) => (
-                  <a key={l.label} href={l.href} className="transition hover:text-white">
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    className="transition hover:text-white"
+                    onClick={(e) => {
+                      if (l.href.startsWith("#") && l.href !== "#") {
+                        e.preventDefault();
+                        scrollToHash(l.href);
+                      }
+                    }}
+                  >
                     {l.label}
                   </a>
                 ))}
               </div>
               <div className="flex flex-col gap-3">
                 {usefulLinksRight.map((l) => (
-                  <a key={l.label} href={l.href} className="transition hover:text-white">
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    className="transition hover:text-white"
+                    onClick={(e) => {
+                      if (l.href.startsWith("#") && l.href !== "#") {
+                        e.preventDefault();
+                        scrollToHash(l.href);
+                      }
+                    }}
+                  >
                     {l.label}
                   </a>
                 ))}

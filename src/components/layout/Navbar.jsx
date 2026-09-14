@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { GoldCta } from "../GoldCta.jsx";
 import { navItems } from "../../data/content.js";
-import { cn } from "../../utils.js";
+import { cn, scrollToHash } from "../../utils.js";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -36,7 +36,14 @@ export function Navbar() {
               : "bg-transparent text-primary shadow-none",
           )}
         >
-          <a href="#top" className="flex shrink-0 items-center gap-2.5 pr-3">
+          <a
+            href="#top"
+            className="flex shrink-0 items-center gap-2.5 pr-3"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToHash("#top");
+            }}
+          >
             <img
               src={scrolled ? "/images/logo-mark-white.png" : "/images/logo-mark-navy.png"}
               alt=""
@@ -65,6 +72,10 @@ export function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToHash(item.href);
+                }}
                 className={cn(
                   "transition-colors duration-300",
                   scrolled
@@ -121,7 +132,12 @@ export function Navbar() {
                 <a
                   key={item.href}
                   href={item.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpen(false);
+                    // wait for menu close paint
+                    window.setTimeout(() => scrollToHash(item.href), 50);
+                  }}
                   className={cn(
                     "block rounded-2xl px-4 py-3 text-[15px] font-bold transition-all duration-300",
                     open ? "translate-x-0 opacity-100" : "translate-x-2 opacity-0",
